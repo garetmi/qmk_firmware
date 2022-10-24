@@ -16,7 +16,7 @@
 /* number of backlight levels */
 #define BACKLIGHT_PIN B5
 #ifdef BACKLIGHT_PIN
-#define BACKLIGHT_LEVELS 3
+#define BACKLIGHT_LEVELS 6
 #endif
 
 /* Set 0 if debouncing isn't needed */
@@ -36,4 +36,4 @@
 #endif
 #define RGB_DI_PIN D3
 
-#define RGBLED_NUM 10
+#define RGBLED_NUM 8

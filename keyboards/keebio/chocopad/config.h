@@ -33,4 +33,4 @@
 #define RGBLIGHT_VAL_STEP 8
 #endif
 #define RGB_DI_PIN D3
-#define RGBLED_NUM 4
+#define RGBLED_NUM 8

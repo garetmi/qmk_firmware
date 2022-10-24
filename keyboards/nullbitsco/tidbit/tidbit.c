@@ -34,7 +34,7 @@ bool numlock_set = false;
 
 #ifdef OLED_ENABLE
 oled_rotation_t oled_init_kb(oled_rotation_t rotation) {
-    return OLED_ROTATION_180;
+    return OLED_ROTATION_0;
 }
 
 static void render_logo(void) {
