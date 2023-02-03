@@ -1,4 +1,4 @@
-#include QMK_KEYBOARD_H
+ #include QMK_KEYBOARD_H
 
 
 #define _BASE 0
@@ -10,7 +10,7 @@
 
 // Tap-Hold keys
 #define KC_ASFT MT(MOD_LSFT, KC_A)
-#define KC_F_L3 LT(_FN3, KC_F)
+#define KC_R_L3 LT(_FN3, KC_R)
 #define KC_ZCTL MT(MOD_LCTL, KC_Z)
 #define KC_XALT MT(MOD_LALT, KC_X)
 #define KC_CGUI MT(MOD_LGUI, KC_C)
@@ -28,8 +28,8 @@
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_BASE] = LAYOUT_ortho_3x10(
-    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
-    KC_ASFT, KC_S,    KC_D,    KC_F_L3, KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_ESCS,
+    KC_Q,    KC_W,    KC_E,    KC_R_L3,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
+    KC_ASFT, KC_S,    KC_D,    KC_F, KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_ESCS,
     KC_ZCTL, KC_XALT, KC_CGUI, KC_V_L4, KC_SPL2, KC_B_L1, KC_N_L5, KC_MALT, KC_BSCT, KC_ENTS
   ),
 
@@ -48,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_FN3] = LAYOUT_ortho_3x10(
     _______, _______, _______, _______, _______, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS,
     KC_TAB,  _______, _______, _______, _______, KC_COMM, KC_DOT,  KC_SLSH, KC_SCLN, KC_QUOT,
-    _______, _______, _______, _______, KC_BSPC, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+    _______, _______, _______, _______, KC_BSPC, _______, KC_LEFT, KC_UP, KC_DOWN,   KC_RGHT
   ),
 
   [_FN4] = LAYOUT_ortho_3x10(

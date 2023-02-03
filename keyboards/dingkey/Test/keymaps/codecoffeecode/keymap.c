@@ -1,4 +1,4 @@
-/* Copyright 2019-2020 DMQ Design
+/* Copyright 2020 codecoffeecode
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,33 +16,37 @@
 #include QMK_KEYBOARD_H
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [0] = LAYOUT(/* Base */
-                KC_5, KC_6, KC_7, KC_8,
-                KC_1, KC_2, KC_3, KC_4,
-                KC_A, KC_B, KC_C, KC_D,
-                KC_X, KC_Y, KC_Z, KC_N
-                ),
+    [0] = LAYOUT(
+      KC_HOME,              KC_UP,   KC_END,   /*|*/ KC_TRNS,
+      KC_LEFT,              KC_DOWN, KC_RIGHT, /*|*/ KC_TRNS,
+      KC_MPRV,              KC_MPLY, KC_MNXT,  /*|*/ KC_TRNS,
+      LCTL(LSFT(KC_ESC)),   RGB_TOG, LGUI(KC_L)
+      ),
 };
 
 bool encoder_update_user(uint8_t index, bool clockwise) {
-  if (index == 0) { /* First encoder */
-    if (clockwise) {
-      tap_code(KC_R); //Cycle through the RGB hue
-    } else {
-      tap_code(KC_L);
+    switch(index) {
+      case 0:
+        if (clockwise) {
+          tap_code(KC_VOLU); // Volume
+        } else {
+          tap_code(KC_VOLD);
+        }
+        break;
+      case 1:
+        if (clockwise) {
+          tap_code(KC_MS_WH_DOWN);  // Scroll
+        } else {
+          tap_code(KC_MS_WH_UP);
+        }
+        break;
+      case 2:
+        if (clockwise) {
+          rgblight_increase_hue(); // RGB Hue
+        } else {
+          rgblight_decrease_hue();
+        }
+        break;
     }
-  } else if (index == 1) { /* Second encoder */
-    if (clockwise) {
-      tap_code(KC_E); //Example of using tap_code which lets you use keycodes outside of the keymap
-    } else {
-      tap_code(KC_F);
-    }
-  } else if (index == 2) { /* Third encoder */
-    if (clockwise) {
-      tap_code(KC_G); //Change brightness on the RGB LEDs
-    } else {
-      tap_code(KC_H);
-    }
-  }
     return true;
 }
