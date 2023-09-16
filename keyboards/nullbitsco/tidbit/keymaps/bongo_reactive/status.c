@@ -32,7 +32,7 @@ void status_render_layer(uint8_t x, uint8_t y) {
       oled_write("osu! ", false);
       break;
     case _VIA2:
-      oled_write("CREO ", false);
+      oled_write("MacOS", false);
       break;
     case _VIA3:
       oled_write("MUSIC", false);
