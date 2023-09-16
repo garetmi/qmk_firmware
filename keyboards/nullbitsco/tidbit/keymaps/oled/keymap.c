@@ -62,3 +62,20 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [3] = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), },
 };
 #endif
+
+#define ANIM_INVERT false
+#define ANIM_RENDER_WPM true
+#define FAST_TYPE_WPM 45 //Switch to fast animation when over words per minute
+
+#ifdef OLED_ENABLE
+#include "music-bars.c"
+#endif
+
+#ifdef OLED_ENABLE
+bool oled_task_user(void) {
+  if (!is_keyboard_master()) {
+    oled_render_anim();
+  }
+  return false;
+}
+#endif
