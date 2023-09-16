@@ -108,7 +108,7 @@ bool matrix_scan_custom(matrix_row_t current_matrix[]) {
 
     #ifdef DEBUG_SLOW_MATRIX
     // Slow for debugging
-    _delay_ms(1000);
+    wait_ms(1000);
     #endif
 
     // Set col, read rows

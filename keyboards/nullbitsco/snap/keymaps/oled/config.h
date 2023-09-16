@@ -16,17 +16,12 @@
 
 #pragma once
 
-#define MATCH_OLED_RGB_BRIGHTNESS
+/* space savers */
+#define DYNAMIC_KEYMAP_LAYER_COUNT 3
+#define NO_ACTION_TAPPING
+#define NO_ACTION_ONESHOT
+#define TAPPING_FORCE_HOLD
+
 #define OLED_BRIGHTNESS 128
 #define OLED_TIMEOUT 30000
 #define OLED_UPDATE_INTERVAL 250
-#define OLED_FADE_OUT
-
-// Selectively define RGB modes to save some space
-// VIA support won't fit otherwise
-#ifdef RGBLIGHT_ENABLE
-#undef RGBLIGHT_ANIMATIONS
-// #define RGBLIGHT_EFFECT_BREATHING
-#define RGBLIGHT_EFFECT_RAINBOW_SWIRL
-#define RGBLIGHT_EFFECT_STATIC_GRADIENT
-#endif //RGB LIGHT_ENABLE

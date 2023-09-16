@@ -13,44 +13,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include QMK_KEYBOARD_H
+#include "snap.h"
 
 // Macro variables
 bool is_alt_tab_active = false;
 uint16_t alt_tab_timer = 0;
 bool muted = false;
-
-typedef struct PACKED {
-    uint8_t r;
-    uint8_t c;
-} encodermap_t;
-
-// Map encoders to their respective virtual matrix entry
-// Allows for encoder control using VIA
-const encodermap_t encoder_map[2][2] = {
-    {{0, 8}, {1, 8}},  // Left encoder matrix location
-    {{6, 8}, {7, 8}},  // Right encoder matrix location
-};
-
-static void process_encoder_matrix(encodermap_t pos) {
-    action_exec((keyevent_t){
-        .key = (keypos_t){.row = pos.r, .col = pos.c}, .pressed = true, .time = (timer_read() | 1) /* time should not be 0 */
-    });
-#if TAP_CODE_DELAY > 0
-    wait_ms(TAP_CODE_DELAY);
-#endif
-    action_exec((keyevent_t){
-        .key = (keypos_t){.row = pos.r, .col = pos.c}, .pressed = false, .time = (timer_read() | 1) /* time should not be 0 */
-    });
-}
-
-bool encoder_update_kb(uint8_t index, bool clockwise) {
-    #ifdef ENCODER_ENABLE
-    if (!encoder_update_user(index, clockwise)) return false;
-    #endif
-    process_encoder_matrix(encoder_map[index][clockwise ? 0 : 1]);
-    return true;
-}
 
 void matrix_init_kb(void) {
     set_bitc_LED(LED_OFF);
@@ -79,12 +47,8 @@ void matrix_scan_kb(void) {
 }
 
 // Use Bit-C LED to show CAPS LOCK and NUM LOCK status
-bool led_update_kb(led_t led_state) {
-    bool res = led_update_user(led_state);
-    if (res) {
-        if (is_keyboard_master()) set_bitc_LED(led_state.caps_lock ? LED_DIM : LED_OFF);
-    }
-    return res;
+void led_update_ports(led_t led_state) {
+    set_bitc_LED(led_state.caps_lock ? LED_DIM : LED_OFF);
 }
 
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
@@ -97,8 +61,8 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     if (!process_record_user(keycode, record)) return false;
 
     switch (keycode) {
-        case RESET:
-            if (record->event.pressed && is_keyboard_master()) {
+        case QK_BOOT:
+            if (record->event.pressed) {
                 set_bitc_LED(LED_DIM);
                 #ifdef RGBLIGHT_ENABLE
                 rgblight_disable_noeeprom();
@@ -146,29 +110,4 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     }
 
     return true;
-}
-
-// Workaround for sleep issues
-void suspend_power_down_kb(void) {
-    suspend_power_down_user();
-
-    // Turn off underglow
-#    if defined(RGBLIGHT_SLEEP) && defined(RGBLIGHT_ENABLE)
-    rgblight_suspend();
-#    endif
-    // Turn off OLED
-#    ifdef OLED_ENABLE
-    oled_off();
-#    endif
-    // Hack: force one last sync
-    matrix_post_scan();
-}
-
-void suspend_wakeup_init_kb(void) {
-    suspend_wakeup_init_user();
-
-    // Wake up underglow
-#if defined(RGBLIGHT_SLEEP) && defined(RGBLIGHT_ENABLE)
-    rgblight_wakeup();
-#endif
 }

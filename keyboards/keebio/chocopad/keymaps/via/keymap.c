@@ -1,36 +1,20 @@
-#include QMK_KEYBOARD_H
+// Copyright 2023 Danny Nguyen (danny@keeb.io)
+// SPDX-License-Identifier: GPL-2.0-or-later
 
-#define _BASE 0
-#define _FN1 1
-#define _FN2 2
-#define _FN3 3
+#include QMK_KEYBOARD_H
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-  [_BASE] = LAYOUT_ortho_4x4(
-    KC_PGUP,  KC_HOME,  KC_UP,    KC_END , \
-    KC_PGDN,  KC_LEFT,  KC_DOWN,  KC_RGHT, \
-    MO(_FN2), KC_VOLU,  KC_MPLY,  KC_MPRV, \
-    MO(_FN1), KC_VOLD,  KC_MUTE,  KC_MNXT  \
+  [0] = LAYOUT_ortho_4x4(
+    KC_P7,   KC_P8,   KC_P9,   KC_PPLS,
+    KC_P4,   KC_P5,   KC_P6,   KC_PERC,
+    KC_P1,   KC_P2,   KC_P3,   KC_EQL,
+    KC_P0,   MO(1),   KC_PDOT, KC_PENT
   ),
-  [_FN1] = LAYOUT_ortho_4x4(
-    KC_ESC,   KC_P7,    KC_P8,    KC_P9,   \
-    KC_TAB,   KC_P4,    KC_P5,    KC_P6,   \
-    KC_ENT,   KC_P1,    KC_P2,    KC_P3,   \
-    KC_TRNS,  KC_P0,    KC_P0,    KC_DOT   \
-  ),
-  [_FN2] = LAYOUT_ortho_4x4(
-    RGB_TOG,  RGB_HUI,  RGB_SAI,  RGB_VAI, \
-    RGB_MOD,  RGB_HUD,  RGB_SAD,  RGB_VAD, \
-    KC_TRNS,  KC_TRNS,  KC_TRNS,  RESET,  \
-    BL_STEP,  KC_TRNS,  KC_TRNS,  KC_TRNS  \
-  ),
-
-  [_FN3] = LAYOUT_ortho_4x4(
-    KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS, \
-    KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS, \
-    KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS, \
-    KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS  \
+  [1] = LAYOUT_ortho_4x4(
+    RGB_TOG, KC_PSLS, KC_PAST, KC_PMNS,
+    KC_PGUP, KC_HOME, KC_UP,   KC_END,
+    KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT,
+    RGB_MOD, _______, KC_VOLD, KC_VOLU
   )
-
 };

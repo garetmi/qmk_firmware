@@ -16,21 +16,19 @@
 // clang-format off
 #pragma once
 
-#include "config_common.h"
-
 /* Used to set host for remote KB if VUSB detect doesn't work. */
 // #define KEYBOARD_HOST // Force host mode
 // #define KEYBOARD_REMOTE // Force remote mode
 
-// Workarounds for boot/sleep issues
+// Workarounds for sleep/wake issues
 #define USB_SUSPEND_WAKEUP_DELAY 250
-#define NO_SUSPEND_POWER_DOWN
 
-/* space savers */
-// #define NO_ACTION_TAPPING // Waiting on QMK #11528
-#define NO_ACTION_ONESHOT
-#define IGNORE_MOD_TAP_INTERRUPT
-#define TAPPING_FORCE_HOLD
+// NOTE: There is a bug in AVR deep sleep, which
+// causes the MCU to stop responding in some cases.
+// Disabling the watchdog prevents the MCU from entering 
+// power down, while still turning off LEDs, audio, etc.
+// See qmk_firmware/issues/20087 for background
+#undef WDT_vect
 
 /* split config */
 // #define SPLIT_USB_DETECT // Enable if you have issues with USB
@@ -43,9 +41,6 @@
 #define MATRIX_ROWS 12
 #define MATRIX_COLS 9
 #define MATRIX_MUX_COLS 3
-
-/* Set 0 if debouncing isn't needed */
-#define DEBOUNCE 10
 
 /*
  * Keyboard Matrix Assignments
@@ -61,20 +56,6 @@
 #define MATRIX_ROW_PINS_RIGHT { F4, F5, F6, F7, B1, B3 }
 #define MATRIX_COL_MUX_PINS_RIGHT { D7, C6, D4 }
 #define MATRIX_EXT_PIN_RIGHT B6
-
-/* Optional SMT LED pins */
-#define RGB_DI_PIN B2
-#define RGBLED_NUM 10
-#define RGBLED_SPLIT { 5, 5 }
-#define RGBLIGHT_LED_MAP { 8, 9, 0, 1, 2, 6, 7, 3, 4, 5 }  
-#define RGBLIGHT_ANIMATIONS
-#define RGBLIGHT_SLEEP
-
-/* Optional encoder pins */
-#define ENCODERS_PAD_A { B3 }
-#define ENCODERS_PAD_B { B1 }
-#define ENCODERS_PAD_A_RIGHT { B4 }
-#define ENCODERS_PAD_B_RIGHT { B5 }
 
 /* Optional speaker pin */
 #define AUDIO_PIN B6
